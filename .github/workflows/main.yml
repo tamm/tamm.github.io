@@ -3,20 +3,21 @@
 
 name: Static Site Generation from Remix with wget
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [main]
+    branches:
+      - main
+      - gh-pages
   pull_request:
-    branches: [main]
-
-  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     environment: github-pages
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
 
     steps:
       - name: ⬇️ Checkout repo
@@ -39,7 +40,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          deploy_key: ${{ secrets.DEPLOY_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./static
-          external_repository: tamm/tamm.github.io
           cname: tamm.in
