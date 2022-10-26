@@ -1,5 +1,6 @@
 # tamm.github.io
 
+[![Static Site Generation from Remix with wget](https://github.com/tamm/tamm.github.io/actions/workflows/main.yml/badge.svg)](https://github.com/tamm/tamm.github.io/actions/workflows/main.yml)
 I built this using [The Remix Indie Stack](https://repository-images.githubusercontent.com/465928257/a241fa49-bd4d-485a-a2a5-5cb8e4ee0abf)
 
 You might also see this repo as an example of how to set up a static site generator using Remix.run, although except for this experimental purpose I'm not sure I can recommend you do that at all ☺️
