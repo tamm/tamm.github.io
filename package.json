@@ -5,9 +5,10 @@
   "scripts": {
     "build": "run-s build:*",
     "build:css": "npm run generate:css -- --minify",
+    "prebuild:remix": "npm run svg-to-components",
     "build:remix": "remix build",
     "prebuild:static": "npm run build:remix",
-    "build:static": "export NODE_ENV='production'; export PORT=3333; yarn start || kill $PPID & sleep 10 && wget --wait=2 --no-host-directories --level=inf --recursive --page-requisites --user-agent=Mozilla --no-parent --convert-links --adjust-extension --no-clobber -e robots=off -R js http://localhost:3000 -P static; kill $PPID",
+    "build:static": "export NODE_ENV='production'; export PORT=3333; yarn start || kill $PPID & sleep 10 && wget --wait=2 --no-host-directories --level=inf --recursive --page-requisites --user-agent=Mozilla --no-parent --convert-links --adjust-extension --no-clobber -e robots=off -R js http://localhost:$PORT -P static; kill $PPID",
     "predev": "cp scripts/pre-commit .git/hooks/ && chmod +x .git/hooks/pre-commit && echo 'pre-commit git hook copied'",
     "dev": "run-p dev:*",
     "dev:css": "npm run generate:css -- --watch",
