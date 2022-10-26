@@ -1,0 +1,15 @@
+node_modules
+
+/build
+/public/build
+/static
+.env
+
+/cypress/screenshots
+/cypress/videos
+
+/prisma/data.db-journal
+
+/app/styles/tailwind.css
+/app/images/svg/*.tsx
+*.DS_Store
