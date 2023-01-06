@@ -5,7 +5,7 @@
                 document.getElementById('smallScreenNavMenu').classList.toggle('hidden');
             }
           });
-        </script></nav><main class="mx-auto max-w-4xl p-6"><div class="markdown-body dark:bg-zinc-900"><a class="text-blue-600 underline" href="how-volatile-is-typescript-2022.html"><h1>How volatile is TypeScript?</h1></a><div><p>I recently got asked the question &quot;How volatile is TypeScript?&quot; and figured I&#39;d write down my thoughts on the matter in 2022.</p>
+        </script></nav><main class="mx-auto max-w-4xl p-6"><div class="markdown-body dark:bg-zinc-900"><a class="text-blue-600 underline" href="how-volatile-is-typescript-2022.html"><h1>How volatile is TypeScript?</h1></a><div><p>I recently got asked the question "How volatile is TypeScript?" and figured I'd write down my thoughts on the matter in 2022.</p>
 <p>My answer splits into sections to make my answer easier to read, and answer some specific parts to the question.</p>
 <h2 id="the-tldr-answer">The TLDR; answer</h2>
 <p>It is not very volatile. I’m however keen to get you digging much further into this, dear reader! Come with me down this rabbit hole!</p>
@@ -20,7 +20,7 @@
 <h3 id="further-related-reading">Further related reading:</h3>
 <p><a href="https://johnrusch.medium.com/how-to-use-arrow-functions-and-why-they-exist-8510067aa4ef">How to use arrow functions and why they exist</a></p>
 <p><a href="https://github.com/basarat/typescript-book/blob/master/docs/arrow-functions.md">typescript-book/arrow-functions.md</a></p>
-<h2 id="its-some-structure-on-top-of-ecma-right">It&#39;s some structure on top of ECMA, right?</h2>
+<h2 id="its-some-structure-on-top-of-ecma-right">It's some structure on top of ECMA, right?</h2>
 <blockquote>
 <p><a href="https://www.typescriptlang.org/">TypeScript</a> is a strongly typed programming language that builds on JavaScript, giving you better tooling at any scale.</p>
 </blockquote>
@@ -44,9 +44,9 @@
 <pre><code class="hljs language-javascript"><span class="hljs-keyword">const</span> brokenDTOFromAPI = { <span class="hljs-attr">b</span>: <span class="hljs-number">1</span> };
 
 <span class="hljs-keyword">const</span> <span class="hljs-title function_">responseHandlerForAPIEndpoint</span> = (<span class="hljs-params">dto</span>) =&gt; {
-  <span class="hljs-keyword">if</span> (!dto?.<span class="hljs-property">a</span>?.<span class="hljs-property">first</span> || <span class="hljs-keyword">typeof</span> dto.<span class="hljs-property">a</span>.<span class="hljs-property">first</span> !== <span class="hljs-string">&quot;string&quot;</span>) { <span class="hljs-keyword">return</span>; }
+  <span class="hljs-keyword">if</span> (!dto?.<span class="hljs-property">a</span>?.<span class="hljs-property">first</span> || <span class="hljs-keyword">typeof</span> dto.<span class="hljs-property">a</span>.<span class="hljs-property">first</span> !== <span class="hljs-string">"string"</span>) { <span class="hljs-keyword">return</span>; }
   
-  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`All good, got &quot;<span class="hljs-subst">${dto.a.first}</span>&quot; from API`</span>);
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`All good, got "<span class="hljs-subst">${dto.a.first}</span>" from API`</span>);
 }
 </code></pre>
 <p>responseHandlerForAPIEndpoint(brokenDTOFromAPI);
