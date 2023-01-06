@@ -1,25 +1,18 @@
-import * as DOMPurify from "dompurify";
-import hljs from "highlight.js";
 import debounce from "lodash.debounce";
-import { marked } from "marked";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 import type { Post } from "~/models/post.server";
+import RenderMarkdownToHTML from "./RenderMarkdownToHTML";
 
 export default function PostRender({ post }: { post: Partial<Post> }) {
-  const [html, setHtml] = useState<string>(marked(post.markdown || ""));
-
-  marked.setOptions({
-    langPrefix: "hljs language-",
-    highlight: function (code) {
-      return hljs.highlightAuto(code, ["html", "javascript"]).value;
-    },
-  });
+  const [html, setHtml] = useState<string>(
+    RenderMarkdownToHTML(post.markdown || "")
+  );
 
   const handleMarkdownChanged = useRef(
     debounce((value: string) => {
-      setHtml(DOMPurify.sanitize(marked(value)));
+      setHtml(RenderMarkdownToHTML(value));
     }, 100)
   );
 
