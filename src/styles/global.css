@@ -14,6 +14,21 @@
   }
 }
 
+/* GPU-accelerate transitions to avoid non-composited animations */
+@layer utilities {
+  .transition-colors,
+  .transition-opacity {
+    will-change: transform;
+    transform: translateZ(0);
+  }
+}
+
+/* Optimize content visibility for below-the-fold content */
+footer {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 400px;
+}
+
 /* High contrast mode for users who prefer it */
 @media (prefers-contrast: more) {
   :root {
