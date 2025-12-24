@@ -60,11 +60,35 @@ Edit `src/config/navigation.ts` to modify:
 
 ## Google Analytics
 
-GA4 is configured in `src/components/Analytics.astro` with measurement ID `G-Z9HFYE12L4` (same as shortlinks project). Only loads in production.
+GA4 is configured in `src/components/Analytics.astro` with measurement ID `G-Z9HFYE12L4` (same as shortlinks project). Only loads in production, deferred via `requestIdleCallback` to minimize main-thread blocking.
+
+## Performance Targets
+
+**Lighthouse scores to maintain: 100/100/100/100** (as of Dec 2025)
+
+| Metric | Target | Notes |
+|--------|--------|-------|
+| Performance | 90+ | Critical CSS inlined via astro-critters |
+| Accessibility | 100 | Links must have underlines, not just color |
+| Best Practices | 100 | CSP headers, no deprecated APIs |
+| SEO | 100 | Meta descriptions, semantic HTML |
+
+**Key optimizations in place:**
+- `astro-critters` - Inlines critical above-the-fold CSS
+- Deferred GA loading - Uses `requestIdleCallback` to avoid blocking
+- GPU-accelerated transitions - `will-change` + `translateZ(0)`
+- `content-visibility: auto` - Footer renders only when needed
+- CSP meta tag - XSS protection, clickjacking prevention
+
+**When adding new features, check:**
+- Links have underlines (not just color differentiation)
+- Images have explicit width/height attributes
+- New scripts are deferred or async
+- Run `npm run build` and check for warnings
 
 ## Deployment
 
-GitHub Actions automatically builds and deploys to GitHub Pages on push to main.
+GitHub Actions automatically builds and deploys to GitHub Pages on push to main. Site health is monitored daily via scheduled workflow.
 
 ## Related Projects
 
