@@ -13,3 +13,36 @@
     @apply text-xl font-medium;
   }
 }
+
+/* High contrast mode for users who prefer it */
+@media (prefers-contrast: more) {
+  :root {
+    --brand-orange: #d45500;
+  }
+
+  .dark {
+    --brand-orange: #ff9f5a;
+  }
+
+  /* Increase contrast for muted text */
+  .text-zinc-400,
+  .text-zinc-500,
+  .text-zinc-600 {
+    color: #525252 !important; /* zinc-600 equivalent */
+  }
+
+  .dark .text-zinc-400,
+  .dark .text-zinc-500,
+  .dark .text-zinc-600 {
+    color: #d4d4d8 !important; /* zinc-300 equivalent */
+  }
+
+  /* Stronger borders */
+  .border-zinc-200 {
+    border-color: #a1a1aa !important;
+  }
+
+  .dark .border-zinc-800 {
+    border-color: #71717a !important;
+  }
+}

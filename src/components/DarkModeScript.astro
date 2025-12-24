@@ -3,17 +3,23 @@
 ---
 
 <script is:inline>
-  // Check for system preference and apply immediately to prevent flash
-  if (
-    localStorage.theme === 'dark' ||
-    (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-  ) {
+  // Dark mode with system preference detection
+  // This script runs synchronously before rendering to prevent flash of wrong theme
+
+  // Read all settings at once, before any DOM modifications
+  const isDarkThemeSaved = localStorage.theme === 'dark';
+  const hasThemePreference = 'theme' in localStorage;
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  // Single DOM write
+  const shouldBeDark = isDarkThemeSaved || (!hasThemePreference && prefersDark);
+  if (shouldBeDark) {
     document.documentElement.classList.add('dark');
   } else {
     document.documentElement.classList.remove('dark');
   }
 
-  // Listen for system preference changes
+  // Listen for system preference changes (only if no saved preference)
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
     if (!('theme' in localStorage)) {
       document.documentElement.classList.toggle('dark', e.matches);
