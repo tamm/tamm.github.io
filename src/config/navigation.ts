@@ -12,16 +12,15 @@ export interface NavSection {
 
 export const mainNavigation: NavLink[] = [
   { label: 'Blog', href: '/blog' },
-  { label: 'Newsletter', href: '/to/news', external: true },
   { label: 'About', href: '/about' },
+  { label: 'Newsletter', href: '/to/news', external: true },
 ];
 
 export const socialLinks: NavLink[] = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/tigresstamm/', external: true, icon: 'linkedin' },
   { label: 'GitHub', href: 'https://github.com/tamm', external: true, icon: 'github' },
-  { label: 'Instagram', href: 'https://instagram.com/tigresstamm', external: true, icon: 'instagram' },
-  { label: 'Bluesky', href: 'https://bsky.app/profile/tamm.in', external: true, icon: 'bluesky' },
-  { label: 'Spotify', href: 'https://open.spotify.com/user/tamm', external: true, icon: 'spotify' },
+  { label: 'Instagram', href: 'https://www.instagram.com/tigresstamm', external: true, icon: 'instagram' },
+  { label: 'Mastodon', href: 'https://corteximplant.com/@tamm', external: true, icon: 'mastodon' },
 ];
 
 export const footerSections: NavSection[] = [
@@ -31,6 +30,12 @@ export const footerSections: NavSection[] = [
       { label: 'Blog', href: '/blog' },
       { label: 'About', href: '/about' },
       { label: 'All Links', href: '/to/', external: true },
+    ],
+  },
+  {
+    title: 'Projects',
+    links: [
+      { label: 'Queer Run Club', href: 'https://queerrunclub.au', external: true },
     ],
   },
   {
