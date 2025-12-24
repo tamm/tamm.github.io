@@ -1,0 +1,59 @@
+name: Site Health Check
+
+on:
+  schedule:
+    # Run daily at 9am UTC (8pm AEDT)
+    - cron: '0 9 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check site availability
+        run: |
+          echo "Checking tamm.in..."
+
+          # Check main site
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://tamm.in)
+          if [ "$HTTP_STATUS" != "200" ]; then
+            echo "❌ Main site returned $HTTP_STATUS"
+            exit 1
+          fi
+          echo "✅ Main site: $HTTP_STATUS"
+
+          # Check key pages
+          for page in "/" "/about/" "/blog/"; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://tamm.in$page")
+            if [ "$STATUS" != "200" ]; then
+              echo "❌ $page returned $STATUS"
+              exit 1
+            fi
+            echo "✅ $page: $STATUS"
+          done
+
+          # Check response time
+          TIME=$(curl -s -o /dev/null -w "%{time_total}" https://tamm.in)
+          echo "⏱️ Response time: ${TIME}s"
+
+          # Warn if slow (> 2 seconds)
+          if (( $(echo "$TIME > 2" | bc -l) )); then
+            echo "⚠️ Warning: Response time exceeds 2 seconds"
+          fi
+
+      - name: Check SSL certificate
+        run: |
+          echo "Checking SSL certificate..."
+          EXPIRY=$(echo | openssl s_client -servername tamm.in -connect tamm.in:443 2>/dev/null | openssl x509 -noout -enddate | cut -d= -f2)
+          echo "📜 SSL expires: $EXPIRY"
+
+          # Check if expiring within 14 days
+          EXPIRY_EPOCH=$(date -d "$EXPIRY" +%s)
+          NOW_EPOCH=$(date +%s)
+          DAYS_LEFT=$(( (EXPIRY_EPOCH - NOW_EPOCH) / 86400 ))
+
+          if [ "$DAYS_LEFT" -lt 14 ]; then
+            echo "⚠️ Warning: SSL certificate expires in $DAYS_LEFT days!"
+          else
+            echo "✅ SSL valid for $DAYS_LEFT more days"
+          fi
