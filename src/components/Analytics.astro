@@ -1,0 +1,16 @@
+---
+const GA_MEASUREMENT_ID = 'G-Z9HFYE12L4';
+const isProd = import.meta.env.PROD;
+---
+
+{isProd && (
+  <>
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
+    <script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', GA_MEASUREMENT_ID);
+    </script>
+  </>
+)}
