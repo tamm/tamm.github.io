@@ -79,13 +79,18 @@ import SocialIcon from '@/components/SocialIcon.astro';
   </nav>
 </header>
 
-<script>
+<script is:inline>
+  // Avoid forced reflow by batching DOM reads and writes
   const toggle = document.getElementById('mobile-menu-toggle');
   const menu = document.getElementById('mobile-menu');
 
   toggle?.addEventListener('click', () => {
-    const expanded = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', String(!expanded));
+    // Read first
+    const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+    const newState = String(!isExpanded);
+
+    // Write operations batched together (no reads between)
+    toggle.setAttribute('aria-expanded', newState);
     menu?.classList.toggle('hidden');
   });
 </script>
