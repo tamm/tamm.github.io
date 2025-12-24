@@ -22,7 +22,7 @@ const posts = (await getCollection('blog'))
                 <h2 class="text-xl font-semibold text-brand-orange group-hover:underline mb-2">
                   {post.data.title}
                 </h2>
-                <time class="text-sm text-zinc-500 dark:text-zinc-500">
+                <time class="text-sm text-zinc-500 dark:text-zinc-400">
                   {post.data.pubDate.toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
