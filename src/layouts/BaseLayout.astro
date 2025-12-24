@@ -29,6 +29,38 @@ const { title, description = 'Personal blog and digital home of Tamm Sjodin' } =
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#f48031" />
     <meta name="theme-color" content="#f48031" />
 
+    <!-- Optimize CSS delivery to reduce render-blocking -->
+    <script>
+      (function () {
+        const optimizeCSS = () => {
+          const links = document.querySelectorAll('link[rel="stylesheet"]');
+          links.forEach((link) => {
+            if (link.dataset.optimized) return;
+            const href = link.getAttribute('href');
+            if (href) {
+              link.dataset.optimized = 'true';
+              link.media = 'print';
+              link.onload = () => {
+                link.media = 'all';
+              };
+              setTimeout(() => {
+                if (link.media === 'print') link.media = 'all';
+              }, 3000);
+            }
+          });
+        };
+        if (document.readyState !== 'loading') {
+          optimizeCSS();
+        } else {
+          document.addEventListener('DOMContentLoaded', optimizeCSS);
+        }
+        if (typeof MutationObserver !== 'undefined') {
+          const observer = new MutationObserver(optimizeCSS);
+          observer.observe(document.head, { childList: true, subtree: false });
+        }
+      })();
+    </script>
+
     <DarkModeScript />
     <Analytics />
   </head>
