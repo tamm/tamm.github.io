@@ -1,15 +1,21 @@
-node_modules
+# Dependencies
+node_modules/
 
-/build
-/public/build
-/static
+# Build output
+dist/
+
+# Environment
 .env
+.env.*
+!.env.example
 
-/cypress/screenshots
-/cypress/videos
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea/
 
-/prisma/data.db-journal
+# OS
+.DS_Store
 
-/app/styles/tailwind.css
-/app/images/svg/*.tsx
-*.DS_Store
+# Astro
+.astro/

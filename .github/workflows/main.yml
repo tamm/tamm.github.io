@@ -1,7 +1,4 @@
-# This is a workflow which will wget your Remix app
-# and deploy it to GitHub pages.
-
-name: Static Site Generation from Remix with wget
+name: Deploy Astro to GitHub Pages
 
 on:
   push:
@@ -9,36 +6,47 @@ on:
       - main
   pull_request:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: github-pages
-    permissions:
-      contents: write
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-
     steps:
-      - name: ⬇️ Checkout repo
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: 🛠 Setup Node
-        uses: actions/setup-node@v3
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: "yarn"
+          node-version: 20
+          cache: npm
 
-      - name: 🛠 Install dependencies
-        run: yarn
+      - name: Install dependencies
+        run: npm ci
 
-      - name: ⚙️ Build
-        run: yarn build
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      - name: Build Astro
+        run: npm run build
 
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./static
-          cname: tamm.in
+        id: deployment
+        uses: actions/deploy-pages@v4
