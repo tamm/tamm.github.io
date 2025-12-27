@@ -5,6 +5,7 @@ pubDate: 2025-12-27
 tags: ["novel", "queer-romance", "members-only"]
 draft: false
 memberOnly: true
+requiredTier: "Early book club"
 ogPrompt: "A vintage cassette tape with a handwritten label, heart doodles around it, some musical notes floating. Nostalgic and romantic vibe. Simple sketch style."
 ---
 

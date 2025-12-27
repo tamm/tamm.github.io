@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { TIER_HIERARCHY } from '@/content/config';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import SponsorBanner from '@/components/SponsorBanner.astro';
 import MemberPaywall from '@/components/MemberPaywall.astro';
@@ -19,6 +20,7 @@ export async function getStaticPaths() {
 const post = Astro.props;
 const { Content } = await post.render();
 const isMemberOnly = post.data.memberOnly;
+const requiredTier = post.data.requiredTier;
 ---
 
 <BaseLayout
@@ -78,16 +80,25 @@ const isMemberOnly = post.data.memberOnly;
           </div>
         </div>
 
-        <script>
-          // Check auth and swap paywall for content if authenticated
+        <script define:vars={{ requiredTier, tierHierarchy: TIER_HIERARCHY }}>
+          // Check auth and swap paywall for content if authenticated with correct tier
           (async () => {
             try {
               const res = await fetch('https://api.tamm.in/auth/status', { credentials: 'include' });
               const data = await res.json();
-              if (data.authenticated && data.isMember) {
-                document.getElementById('member-paywall')?.classList.add('hidden');
-                document.getElementById('member-content')?.classList.remove('hidden');
+
+              if (!data.authenticated || !data.isMember) return;
+
+              // Check tier access if required
+              if (requiredTier) {
+                const userTierIndex = tierHierarchy.indexOf(data.tier);
+                const requiredTierIndex = tierHierarchy.indexOf(requiredTier);
+                // User's tier must be >= required tier (higher index = higher tier)
+                if (userTierIndex < requiredTierIndex) return;
               }
+
+              document.getElementById('member-paywall')?.classList.add('hidden');
+              document.getElementById('member-content')?.classList.remove('hidden');
             } catch (e) {
               // Auth check failed, keep paywall visible
             }
