@@ -198,6 +198,16 @@ CRITICAL RULES:
                 # Overlay the logo
                 overlay_logo(output_path)
 
+                # Also generate WebP version for faster page loads
+                webp_path = output_path.with_suffix('.webp')
+                try:
+                    img = Image.open(output_path)
+                    img.save(webp_path, 'WEBP', quality=85)
+                    webp_kb = webp_path.stat().st_size / 1024
+                    print(f"  Saved: {webp_path.name} ({webp_kb:.1f} KB)")
+                except Exception as e:
+                    print(f"  Warning: Could not create WebP: {e}")
+
                 return True
 
         print("  Error: No image in response")
