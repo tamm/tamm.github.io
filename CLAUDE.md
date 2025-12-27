@@ -113,6 +113,19 @@ GA4 is configured in `src/components/Analytics.astro` with measurement ID `G-Z9H
 
 GitHub Actions automatically builds and deploys to GitHub Pages on push to main. Site health is monitored daily via scheduled workflow.
 
+## Ko-fi Integration
+
+Support/membership platform at [ko-fi.com/tigresstamm](https://ko-fi.com/tigresstamm). Support banner appears on blog posts via `SponsorBanner.astro`. Banner placement configurable in `src/pages/blog/[...slug].astro`.
+
+### Future Plans
+
+- **Membership tracking system**: Ko-fi webhooks only fire on payment events (not cancellations or status checks). Build a system to track membership status locally by storing webhook events and calculating expiry dates. This enables paywalled/members-only content on the blog.
+
+- **Mailchimp sync**: No native Ko-fi → Mailchimp integration. Options:
+  - Zapier automation (free tier limited, paid ~$20/mo)
+  - Custom webhook handler that adds/removes from Mailchimp via their API
+  - Build alongside the membership tracking system above
+
 ## Related Projects
 
 - `../tamm-shortlinks` - Cloudflare Worker for tamm.in/to/* shortlinks
