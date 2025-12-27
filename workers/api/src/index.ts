@@ -170,40 +170,62 @@ function handleLoginPage(request: Request, env: Env, corsHeaders: Record<string,
   <title>Member Login - tamm.in</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { color-scheme: light dark; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #1a1a1a;
-      color: #fff;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #fff;
+      color: #18181b;
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 20px;
     }
+    @media (prefers-color-scheme: dark) {
+      body { background: #18181b; color: #f4f4f5; }
+      .container { background: #27272a; border-color: #3f3f46; }
+      input[type="email"] { background: #3f3f46; border-color: #52525b; color: #f4f4f5; }
+      .subtext { color: #a1a1aa; }
+      .footer-links { border-color: #3f3f46; }
+      .footer-links a { color: #a1a1aa; }
+    }
+    .logo {
+      margin-bottom: 32px;
+    }
+    .logo a {
+      color: #f48031;
+      text-decoration: none;
+      font-size: 28px;
+      font-weight: 700;
+    }
     .container {
       max-width: 400px;
       width: 100%;
-      background: #2a2a2a;
-      border-radius: 12px;
-      padding: 40px;
+      background: #f4f4f5;
+      border: 1px solid #e4e4e7;
+      border-radius: 16px;
+      padding: 32px;
     }
-    h1 { font-size: 24px; margin-bottom: 8px; color: #f48031; }
-    p { color: #888; margin-bottom: 24px; }
-    label { display: block; margin-bottom: 8px; font-size: 14px; }
+    h1 { font-size: 24px; margin-bottom: 8px; color: #18181b; }
+    @media (prefers-color-scheme: dark) { h1 { color: #f4f4f5; } }
+    .subtext { color: #71717a; margin-bottom: 24px; font-size: 15px; line-height: 1.5; }
+    label { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 500; }
     input[type="email"] {
       width: 100%;
-      padding: 12px;
-      border: 1px solid #444;
+      padding: 12px 14px;
+      border: 1px solid #d4d4d8;
       border-radius: 8px;
-      background: #333;
-      color: #fff;
+      background: #fff;
+      color: #18181b;
       font-size: 16px;
       margin-bottom: 16px;
+      transition: border-color 0.15s;
     }
-    input[type="email"]:focus { outline: none; border-color: #f48031; }
+    input[type="email"]:focus { outline: none; border-color: #f48031; box-shadow: 0 0 0 3px rgba(244, 128, 49, 0.1); }
     button {
       width: 100%;
-      padding: 12px;
+      padding: 12px 16px;
       background: #f48031;
       color: #fff;
       border: none;
@@ -211,27 +233,49 @@ function handleLoginPage(request: Request, env: Env, corsHeaders: Record<string,
       font-size: 16px;
       cursor: pointer;
       font-weight: 600;
+      transition: background 0.15s;
     }
-    button:hover { background: #e07020; }
-    button:disabled { background: #666; cursor: not-allowed; }
-    .success { background: #1a3a1a; border: 1px solid #2a5a2a; padding: 16px; border-radius: 8px; margin-top: 16px; }
-    .error { background: #3a1a1a; border: 1px solid #5a2a2a; padding: 16px; border-radius: 8px; margin-top: 16px; }
-    .back-link { display: block; text-align: center; margin-top: 24px; color: #888; text-decoration: none; }
+    button:hover { background: #e5722b; }
+    button:disabled { background: #a1a1aa; cursor: not-allowed; }
+    .success { background: #dcfce7; border: 1px solid #86efac; color: #166534; padding: 16px; border-radius: 8px; margin-top: 16px; }
+    .error { background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; padding: 16px; border-radius: 8px; margin-top: 16px; }
+    @media (prefers-color-scheme: dark) {
+      .success { background: #14532d; border-color: #22c55e; color: #dcfce7; }
+      .error { background: #7f1d1d; border-color: #ef4444; color: #fee2e2; }
+    }
+    .footer-links {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid #e4e4e7;
+      text-align: center;
+      font-size: 14px;
+    }
+    .footer-links p { color: #71717a; margin-bottom: 8px; }
+    .footer-links a { color: #f48031; text-decoration: underline; text-decoration-color: rgba(244, 128, 49, 0.3); }
+    .footer-links a:hover { text-decoration-color: #f48031; }
+    .back-link { display: block; text-align: center; margin-top: 24px; color: #71717a; text-decoration: none; font-size: 14px; }
     .back-link:hover { color: #f48031; }
   </style>
 </head>
 <body>
+  <div class="logo"><a href="${env.SITE_URL}">tamm.in</a></div>
   <div class="container">
     <h1>Member Login</h1>
-    <p>Enter your email to receive a magic link.</p>
+    <p class="subtext">Enter your email to receive a magic link. No password needed!</p>
     <form id="login-form">
       <label for="email">Email address</label>
-      <input type="email" id="email" name="email" required placeholder="you@example.com">
+      <input type="email" id="email" name="email" required placeholder="you@example.com" autocomplete="email">
       <button type="submit" id="submit-btn">Send Magic Link</button>
     </form>
     <div id="message"></div>
-    <a href="${env.SITE_URL}" class="back-link">Back to tamm.in</a>
+    <div class="footer-links">
+      <p>Looking for something else?</p>
+      <a href="https://ko-fi.com/tigresstamm/tiers" target="_blank" rel="noopener">Become a member</a>
+      &nbsp;·&nbsp;
+      <a href="${env.SITE_URL}/to/news">Newsletter signup</a>
+    </div>
   </div>
+  <a href="${env.SITE_URL}" class="back-link">&larr; Back to tamm.in</a>
   <script>
     const form = document.getElementById('login-form');
     const btn = document.getElementById('submit-btn');
@@ -251,7 +295,7 @@ function handleLoginPage(request: Request, env: Env, corsHeaders: Record<string,
         });
         const data = await res.json();
         if (res.ok) {
-          msg.innerHTML = '<div class="success">Check your email for the magic link!</div>';
+          msg.innerHTML = '<div class="success">✓ Check your email for the magic link!</div>';
           form.style.display = 'none';
         } else {
           msg.innerHTML = '<div class="error">' + (data.error || 'Something went wrong') + '</div>';
