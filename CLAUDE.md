@@ -101,11 +101,12 @@ GA4 is configured in `src/components/Analytics.astro` with measurement ID `G-Z9H
 - WebP images with `<picture>` fallbacks - 90%+ size reduction
 - Responsive images - srcset with 400w/800w/1200w variants
 - LCP preload hints - `<link rel="preload">` for hero images
+- **Content-hashed assets** - All WebP images get hash in filename at build time
 - Deferred GA loading - Uses `requestIdleCallback` to avoid blocking
 - GPU-accelerated transitions - `will-change` + `translateZ(0)`
 - `content-visibility: auto` - Footer renders only when needed
 - CSP meta tag - XSS protection, clickjacking prevention
-- Cloudflare Cache Rules - Long TTL for static assets
+- Cloudflare Cache Rules - Long TTL for static assets (safe due to hashing)
 
 **When adding new features, check:**
 - Links have underlines (not just color differentiation)
@@ -115,6 +116,20 @@ GA4 is configured in `src/components/Analytics.astro` with measurement ID `G-Z9H
 - Run `npm run build` and check for warnings
 
 **IMPORTANT: After any visual or structural changes, ask the user to run Lighthouse and share the results. Target is 100/100/100/100. If Performance drops below 100, investigate immediately.**
+
+## Asset Hashing
+
+All WebP images are content-hashed at build time via `scripts/hash-assets.js`. This runs automatically after `npm run build`.
+
+**What gets hashed:**
+- `qrc-logo.webp` → `qrc-logo.a1b2c3d4.webp`
+- `tamm-portrait.webp` → `tamm-portrait.a1b2c3d4.webp`
+- All `/og/*.webp` files (full size and responsive variants)
+
+**What stays unhashed:**
+- `/og/*.png` - OG meta images need stable URLs for social platforms
+
+This allows Cloudflare to cache forever (1 year) since the hash changes when content changes.
 
 ## Deployment
 
