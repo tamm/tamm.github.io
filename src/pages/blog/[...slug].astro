@@ -44,5 +44,26 @@ const { Content } = await post.render();
     <div class="prose prose-zinc dark:prose-invert prose-headings:text-zinc-900 dark:prose-headings:text-zinc-100 prose-a:text-brand-orange prose-code:text-brand-orange max-w-none">
       <Content />
     </div>
+
+    <!-- Author byline -->
+    <footer class="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-700">
+      <a href="/about" class="flex items-center gap-4 group no-underline">
+        <img
+          src="/tamm-portrait.jpg"
+          alt="Tamm Sjödin"
+          width="64"
+          height="64"
+          class="w-16 h-16 rounded-full object-cover flex-shrink-0"
+        />
+        <div>
+          <p class="font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-brand-orange transition-colors">
+            Tamm Sjödin
+          </p>
+          <p class="text-sm text-zinc-500 dark:text-zinc-400">
+            Web Sorceress & Engineering Leader · Founder of Queer Run Club · Swede in Sydney
+          </p>
+        </div>
+      </a>
+    </footer>
   </article>
 </BaseLayout>
