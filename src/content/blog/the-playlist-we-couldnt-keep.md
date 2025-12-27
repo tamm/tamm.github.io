@@ -1,7 +1,7 @@
 ---
 title: "The Playlist We Couldn't Keep"
 description: "The Playlist We Couldn't Keep is Tamm's debut novel."
-pubDate: 2025-12-27
+pubDate: 2025-12-28
 tags: ["novel", "queer-romance", "members-only"]
 draft: false
 memberOnly: true
