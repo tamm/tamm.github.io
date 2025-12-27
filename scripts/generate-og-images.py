@@ -198,15 +198,29 @@ CRITICAL RULES:
                 # Overlay the logo
                 overlay_logo(output_path)
 
-                # Also generate WebP version for faster page loads
-                webp_path = output_path.with_suffix('.webp')
+                # Also generate WebP versions for faster page loads
                 try:
                     img = Image.open(output_path)
+
+                    # Full size WebP
+                    webp_path = output_path.with_suffix('.webp')
                     img.save(webp_path, 'WEBP', quality=85)
                     webp_kb = webp_path.stat().st_size / 1024
                     print(f"  Saved: {webp_path.name} ({webp_kb:.1f} KB)")
+
+                    # 800w responsive version
+                    img_800 = img.resize((800, 420), Image.Resampling.LANCZOS)
+                    webp_800_path = output_path.with_stem(output_path.stem + '-800w').with_suffix('.webp')
+                    img_800.save(webp_800_path, 'WEBP', quality=85)
+                    print(f"  Saved: {webp_800_path.name} ({webp_800_path.stat().st_size / 1024:.1f} KB)")
+
+                    # 400w responsive version
+                    img_400 = img.resize((400, 210), Image.Resampling.LANCZOS)
+                    webp_400_path = output_path.with_stem(output_path.stem + '-400w').with_suffix('.webp')
+                    img_400.save(webp_400_path, 'WEBP', quality=85)
+                    print(f"  Saved: {webp_400_path.name} ({webp_400_path.stat().st_size / 1024:.1f} KB)")
                 except Exception as e:
-                    print(f"  Warning: Could not create WebP: {e}")
+                    print(f"  Warning: Could not create WebP versions: {e}")
 
                 return True
 

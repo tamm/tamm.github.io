@@ -8,7 +8,8 @@ const posts = (await getCollection('blog'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const latestPost = posts[0];
-const lcpImage = latestPost ? (latestPost.data.ogImage || `/og/${latestPost.slug}.webp`) : undefined;
+// Preload 800w as it covers most viewport sizes
+const lcpImage = latestPost ? `/og/${latestPost.slug}-800w.webp` : undefined;
 ---
 
 <BaseLayout title="Home" isHomepage={true} lcpImage={lcpImage}>
@@ -39,7 +40,11 @@ const lcpImage = latestPost ? (latestPost.data.ogImage || `/og/${latestPost.slug
         <a href={`/blog/${latestPost.slug}`} class="group block">
           <article class="border-b border-zinc-200 dark:border-zinc-800 pb-8">
             <picture>
-              <source srcset={latestPost.data.ogImage || `/og/${latestPost.slug}.webp`} type="image/webp" />
+              <source
+                type="image/webp"
+                srcset={`/og/${latestPost.slug}-400w.webp 400w, /og/${latestPost.slug}-800w.webp 800w, /og/${latestPost.slug}.webp 1200w`}
+                sizes="(max-width: 640px) 400px, (max-width: 1024px) 800px, 1200px"
+              />
               <img
                 src={latestPost.data.ogImage || `/og/${latestPost.slug}.png`}
                 alt={latestPost.data.title}
@@ -95,7 +100,7 @@ const lcpImage = latestPost ? (latestPost.data.ogImage || `/og/${latestPost.slug
           <div class="flex flex-col items-center text-center gap-4">
             <picture>
                 <source srcset="/qrc-logo.webp" type="image/webp" />
-                <img src="/qrc-logo.svg" alt="Queer Run Club logo" class="w-28 h-28 flex-shrink-0" width="112" height="112" loading="lazy" decoding="async" />
+                <img src="/qrc-logo.svg" alt="Queer Run Club logo" class="h-28 w-auto flex-shrink-0" width="80" height="112" loading="lazy" decoding="async" />
               </picture>
             <div>
               <h3 class="text-xl font-semibold text-brand-orange group-hover:underline mb-2">

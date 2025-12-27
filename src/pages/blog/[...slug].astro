@@ -24,7 +24,8 @@ const requiredTier = post.data.requiredTier;
 
 // Image paths - PNG for OG meta, WebP for display
 const ogImagePng = post.data.ogImage || `/og/${post.slug}.png`;
-const displayImageWebp = post.data.ogImage || `/og/${post.slug}.webp`;
+// Preload 800w as it covers most viewport sizes
+const lcpImageWebp = `/og/${post.slug}-800w.webp`;
 ---
 
 <BaseLayout
@@ -32,12 +33,16 @@ const displayImageWebp = post.data.ogImage || `/og/${post.slug}.webp`;
   description={post.data.description}
   image={ogImagePng}
   type="article"
-  lcpImage={displayImageWebp}
+  lcpImage={lcpImageWebp}
 >
   <article class="max-w-4xl mx-auto px-6 pt-4 pb-12">
     <header class="mb-8">
       <picture>
-        <source srcset={displayImageWebp} type="image/webp" />
+        <source
+          type="image/webp"
+          srcset={`/og/${post.slug}-400w.webp 400w, /og/${post.slug}-800w.webp 800w, /og/${post.slug}.webp 1200w`}
+          sizes="(max-width: 640px) 400px, (max-width: 1024px) 800px, 1200px"
+        />
         <img
           src={ogImagePng}
           alt={post.data.title}
