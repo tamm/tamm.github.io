@@ -4,6 +4,7 @@ description: "A reflection on AI, creativity, and what it means to make art—sp
 pubDate: 2025-12-27
 tags: ["what-is-art", "ai-creativity", "dreams", "not-slop", "sleep-songwriting"]
 draft: false
+ogPrompt: "Simple and minimal: a round full moon circle (NOT crescent) with concentric ring lines around it like sound waves or music ripples emanating outward. A few small music notes. Keep it very simple and clean like v6 reference. The moon is just a circle with maybe closed happy eyes. Scribbles bleed off edges."
 ---
 
 I woke up this morning with a song in my head, and this is that song.

@@ -14,7 +14,12 @@ const post = Astro.props;
 const { Content } = await post.render();
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description}>
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  image={post.data.ogImage || `/og/${post.slug}.png`}
+  type="article"
+>
   <article class="max-w-4xl mx-auto px-6 py-12">
     <header class="mb-8">
       <a href="/blog" class="text-brand-orange underline decoration-brand-orange/30 hover:decoration-brand-orange text-sm mb-4 inline-block">

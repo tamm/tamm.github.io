@@ -9,6 +9,8 @@ const blog = defineCollection({
     updatedDate: z.coerce.date().optional(),
     draft: z.boolean().default(false),
     tags: z.array(z.string()).default([]),
+    ogImage: z.string().optional(),
+    ogPrompt: z.string().optional(), // Custom prompt for OG image generation (not rendered)
   }),
 });
 

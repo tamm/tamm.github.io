@@ -46,10 +46,33 @@ description: "Optional description"
 pubDate: 2025-01-01
 tags: ["tag1", "tag2"]
 draft: false
+ogPrompt: "Custom prompt for OG image generation (optional)"
 ---
 
 Your markdown content here...
 ```
+
+## OG Image Generation
+
+Each blog post needs an Open Graph image for social sharing. Images are generated using Gemini and stored in `public/og/{slug}.png`.
+
+**Generate OG images:**
+```bash
+source .venv/bin/activate
+python3 scripts/generate-og-images.py              # All posts missing images
+python3 scripts/generate-og-images.py my-post-slug # Specific post (regenerates)
+```
+
+**Style:** Hand-drawn napkin sketch aesthetic with chunky brush lettering, dark charcoal background, white/orange (#f48031) color scheme. Reference image at `scripts/assets/og-style-reference.png`.
+
+**Custom prompts:** Add `ogPrompt` to frontmatter for post-specific imagery. Describe the illustration you want (e.g., "seismograph squiggly line", "cute round moon with music rings"). The script combines this with the base style prompt.
+
+**Requirements:**
+- Python venv with `requests`, `python-dotenv`, `Pillow`
+- `GEMINI_API_KEY` in `.env` file
+- `librsvg` for logo overlay (`brew install librsvg`)
+
+**When creating a new blog post, always generate an OG image with an appropriate `ogPrompt`.**
 
 ## Navigation Configuration
 

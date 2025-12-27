@@ -3,6 +3,7 @@ title: "How volatile is TypeScript?"
 description: "An exploration of TypeScript's stability, evolution, and what developers should know about its type system in 2022."
 pubDate: 2022-10-26
 tags: ["typescript", "javascript", "programming"]
+ogPrompt: "A seismograph-style squiggly line running across the image, like measuring volatility/stability. The word 'volatile' in the title should be underlined. The squiggly line should drift off both edges of the image. Maybe include a tiny sketched TypeScript logo. Very minimal, loose hand-drawn lines."
 ---
 
 I recently got asked the question "How volatile is TypeScript?" and figured I'd write down my thoughts on the matter in 2022.

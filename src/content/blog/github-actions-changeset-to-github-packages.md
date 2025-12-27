@@ -3,6 +3,7 @@ title: "Publish to GitHub Packages using Actions and Changesets"
 description: "A guide to publishing packages to GitHub Packages (GPR) via GitHub Actions with Changesets, including workarounds for common authentication issues."
 pubDate: 2023-01-06
 tags: ["github", "ci-cd", "npm", "changesets"]
+ogPrompt: "Cute simple sketched icons: a little GitHub octocat face sketch, a whimsical arrow, and a gift/package box with a bow. The icons should be adorable and minimal like tiny doodles. NO TEXT except the title. Loose scribbles bleeding off edges. Very cute and charming."
 ---
 
 Can I publish from a GitHub Action to GitHub Packages using Changesets? Yes and no.

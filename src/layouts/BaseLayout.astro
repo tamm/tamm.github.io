@@ -8,9 +8,19 @@ import Analytics from '@/components/Analytics.astro';
 interface Props {
   title: string;
   description?: string;
+  image?: string;
+  type?: 'website' | 'article';
 }
 
-const { title, description = 'Personal blog and digital home of Tamm Sjodin' } = Astro.props;
+const {
+  title,
+  description = 'Personal blog and digital home of Tamm Sjodin',
+  image = '/og-default.png',
+  type = 'website'
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(image, Astro.site);
 ---
 
 <!doctype html>
@@ -20,6 +30,25 @@ const { title, description = 'Personal blog and digital home of Tamm Sjodin' } =
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <title>{title} | tamm.in</title>
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={`${title} | tamm.in`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:site_name" content="tamm.in" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={`${title} | tamm.in`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/rss+xml" title="tamm.in RSS Feed" href="/rss.xml" />
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
