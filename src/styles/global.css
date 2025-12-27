@@ -65,10 +65,12 @@
 
 /* Hide header logo on homepage when hero is active */
 .header-logo[data-hidden="true"] {
-  clip-path: inset(100%);
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* Hide hero logo when scrolled */
 .hero-logo[data-hidden="true"] {
-  clip-path: inset(100%);
+  opacity: 0;
+  pointer-events: none;
 }

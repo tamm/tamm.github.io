@@ -118,28 +118,44 @@ const { isHomepage = false } = Astro.props;
 
       if (headerLogo && heroLogo) {
         let isHeaderVisible = false;
+        let isAnimating = false;
+
+        // Hero starts visible with transition name, header hidden
+        heroLogo.style.viewTransitionName = 'site-logo';
+        headerLogo.style.viewTransitionName = 'none';
+        headerLogo.dataset.hidden = 'true';
 
         scrollHandler = () => {
+          if (isAnimating) return;
+
           const heroRect = heroLogo.getBoundingClientRect();
           const shouldShowHeader = heroRect.top < 80;
 
           if (shouldShowHeader !== isHeaderVisible) {
             isHeaderVisible = shouldShowHeader;
+            isAnimating = true;
 
-            if (shouldShowHeader) {
-              // Show header logo, hide hero
-              heroLogo.dataset.hidden = 'true';
-              delete headerLogo.dataset.hidden;
-              // Swap view-transition-name so header logo animates on page nav
-              heroLogo.style.viewTransitionName = 'none';
-              headerLogo.style.viewTransitionName = 'site-logo';
+            const doSwap = () => {
+              if (shouldShowHeader) {
+                heroLogo.style.viewTransitionName = 'none';
+                heroLogo.dataset.hidden = 'true';
+                delete headerLogo.dataset.hidden;
+                headerLogo.style.viewTransitionName = 'site-logo';
+              } else {
+                headerLogo.style.viewTransitionName = 'none';
+                headerLogo.dataset.hidden = 'true';
+                delete heroLogo.dataset.hidden;
+                heroLogo.style.viewTransitionName = 'site-logo';
+              }
+            };
+
+            if (document.startViewTransition) {
+              document.startViewTransition(doSwap).finished.finally(() => {
+                isAnimating = false;
+              });
             } else {
-              // Show hero logo, hide header
-              delete heroLogo.dataset.hidden;
-              headerLogo.dataset.hidden = 'true';
-              // Swap view-transition-name so hero logo animates on page nav
-              headerLogo.style.viewTransitionName = 'none';
-              heroLogo.style.viewTransitionName = 'site-logo';
+              doSwap();
+              isAnimating = false;
             }
           }
         };
