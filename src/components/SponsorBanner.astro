@@ -1,0 +1,37 @@
+---
+// Support banner - can later be swapped for sponsor ads
+
+interface Props {
+  placement?: string;
+}
+
+const { placement = '' } = Astro.props;
+---
+
+<aside class="support-banner my-6" data-placement={placement}>
+  <a
+    href="https://ko-fi.com/tigresstamm"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="flex items-center gap-4 p-4 rounded-lg border bg-zinc-50 dark:bg-zinc-800/50 border-zinc-200 dark:border-zinc-700 hover:border-brand-orange/50 transition-colors no-underline group"
+  >
+    <div class="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-2xl bg-brand-orange/10">
+      <svg class="w-6 h-6 text-brand-orange" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.053 2.678 2.053 2.678s5.915.042 8.867.042c1.819 0 3.086-.842 3.086-.842s.322-.124.322-.523c0-.323-.021-.549-.021-.549s-.242-.276-.486-.276H7.343c-.574 0-.823-.406-.823-.406s-.076-.406.021-.74c.098-.333.595-.858 1.085-.858h5.592c.574 0 .865-.574.865-.574s.617-.94.617-1.613c0-.758-.617-1.146-.617-1.146s-.291-.533-.881-.533H7.343c-.541 0-.799-.492-.799-.492s-.205-.459.041-.832c.246-.374.822-.789 1.39-.789h5.592c.513 0 .853-.483.853-.483s.829-1.25.829-2.016c0-.766-.829-1.119-.829-1.119s-.34-.467-.907-.467H7.343c-.52 0-.782-.513-.782-.513s-.175-.475.064-.828c.238-.354.811-.774 1.367-.774h4.959c.52 0 1.105-.48 1.105-.48s2.453-.398 3.167.924c.715 1.322.304 3.588.304 3.588s-.108.669-.419 1.146c-.312.478-.769.805-.769.805s-.174.205-.174.574c0 .369.174.676.174.676s.393.452.786.452h.786c.393 0 .804-.287.804-.287s3.578-1.176 4.178-5.955z"/>
+      </svg>
+    </div>
+
+    <div class="flex-1 min-w-0">
+      <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100 group-hover:text-brand-orange transition-colors">
+        Enjoy this post? Buy me a coffee
+      </p>
+      <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+        Your support helps me keep writing
+      </p>
+    </div>
+
+    <svg class="w-4 h-4 text-zinc-400 group-hover:text-brand-orange transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+    </svg>
+  </a>
+</aside>

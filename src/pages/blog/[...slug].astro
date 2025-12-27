@@ -1,6 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import SponsorBanner from '@/components/SponsorBanner.astro';
+
+// Support banner placement (can later become sponsor ads)
+const SHOW_SUPPORT_BANNER = true;
+const BANNER_PLACEMENT = 'after-header'; // 'after-header' | 'before-footer' | 'both'
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -53,9 +58,17 @@ const { Content } = await post.render();
       </a>
     </header>
 
+    {SHOW_SUPPORT_BANNER && (BANNER_PLACEMENT === 'after-header' || BANNER_PLACEMENT === 'both') && (
+      <SponsorBanner placement="after-header" />
+    )}
+
     <div class="prose prose-zinc dark:prose-invert prose-headings:text-zinc-900 dark:prose-headings:text-zinc-100 prose-a:text-brand-orange prose-code:text-brand-orange max-w-none">
       <Content />
     </div>
+
+    {SHOW_SUPPORT_BANNER && (BANNER_PLACEMENT === 'before-footer' || BANNER_PLACEMENT === 'both') && (
+      <SponsorBanner placement="before-footer" />
+    )}
 
     <!-- Author byline -->
     <footer class="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-700">

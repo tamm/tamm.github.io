@@ -21,6 +21,7 @@ export const socialLinks: NavLink[] = [
   { label: 'GitHub', href: 'https://github.com/tamm', external: true, icon: 'github' },
   { label: 'Instagram', href: 'https://www.instagram.com/tigresstamm', external: true, icon: 'instagram' },
   { label: 'Mastodon', href: 'https://corteximplant.com/@tamm', external: true, icon: 'mastodon' },
+  { label: 'Ko-fi', href: 'https://ko-fi.com/tigresstamm', external: true, icon: 'kofi' },
 ];
 
 export const footerSections: NavSection[] = [
