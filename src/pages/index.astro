@@ -37,13 +37,18 @@ const latestPost = posts[0];
         <h2 class="text-2xl font-semibold mb-6">Latest Post</h2>
         <a href={`/blog/${latestPost.slug}`} class="group block">
           <article class="border-b border-zinc-200 dark:border-zinc-800 pb-8">
-            <img
-              src={latestPost.data.ogImage || `/og/${latestPost.slug}.png`}
-              alt={latestPost.data.title}
-              class="w-full rounded-lg mb-4"
-              width="1200"
-              height="630"
-            />
+            <picture>
+              <source srcset={latestPost.data.ogImage || `/og/${latestPost.slug}.webp`} type="image/webp" />
+              <img
+                src={latestPost.data.ogImage || `/og/${latestPost.slug}.png`}
+                alt={latestPost.data.title}
+                class="w-full rounded-lg mb-4"
+                width="1200"
+                height="630"
+                fetchpriority="high"
+                decoding="async"
+              />
+            </picture>
             <h3 class="text-xl font-semibold text-brand-orange group-hover:underline mb-2">
               {latestPost.data.title}
             </h3>

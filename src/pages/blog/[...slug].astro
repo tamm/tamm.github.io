@@ -127,13 +127,18 @@ const displayImageWebp = post.data.ogImage || `/og/${post.slug}.webp`;
     <!-- Author byline -->
     <footer class="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-700">
       <a href="/about" class="flex items-center gap-4 group no-underline">
-        <img
-          src="/tamm-portrait.jpg"
-          alt="Tamm Sjödin"
-          width="64"
-          height="64"
-          class="w-16 h-16 rounded-full object-cover flex-shrink-0"
-        />
+        <picture>
+          <source srcset="/tamm-portrait.webp" type="image/webp" />
+          <img
+            src="/tamm-portrait.jpg"
+            alt="Tamm Sjödin"
+            width="64"
+            height="64"
+            class="w-16 h-16 rounded-full object-cover flex-shrink-0"
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
         <div>
           <p class="font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-brand-orange transition-colors">
             Tamm Sjödin

@@ -8,11 +8,18 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 
     <div class="md:flex md:gap-8 mb-8">
       <div class="md:w-1/3 mb-6 md:mb-0 flex-shrink-0">
-        <img
-          src="/tamm-portrait.jpg"
-          alt="Tamm Sjödin"
-          class="rounded-lg w-full max-w-[280px] mx-auto md:mx-0"
-        />
+        <picture>
+          <source srcset="/tamm-portrait.webp" type="image/webp" />
+          <img
+            src="/tamm-portrait.jpg"
+            alt="Tamm Sjödin"
+            class="rounded-lg w-full max-w-[280px] mx-auto md:mx-0"
+            width="280"
+            height="280"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </picture>
       </div>
 
       <div class="prose prose-zinc dark:prose-invert prose-a:text-brand-orange max-w-none">
