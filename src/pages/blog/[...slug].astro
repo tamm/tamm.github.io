@@ -20,13 +20,17 @@ const { Content } = await post.render();
   image={post.data.ogImage || `/og/${post.slug}.png`}
   type="article"
 >
-  <article class="max-w-4xl mx-auto px-6 py-12">
+  <article class="max-w-4xl mx-auto px-6 pt-4 pb-12">
     <header class="mb-8">
-      <a href="/blog" class="text-brand-orange underline decoration-brand-orange/30 hover:decoration-brand-orange text-sm mb-4 inline-block">
-        &larr; Back to blog
-      </a>
-      <h1 class="text-3xl md:text-4xl font-bold mb-4">{post.data.title}</h1>
-      <div class="flex flex-wrap items-center gap-4 text-zinc-500 dark:text-zinc-400">
+      <img
+        src={post.data.ogImage || `/og/${post.slug}.png`}
+        alt={post.data.title}
+        class="w-full rounded-lg mb-6"
+        width="1200"
+        height="630"
+      />
+      <h1 class="sr-only">{post.data.title}</h1>
+      <div class="flex flex-wrap items-center gap-4 text-zinc-500 dark:text-zinc-400 mb-2">
         <time>
           {post.data.pubDate.toLocaleDateString('en-US', {
             year: 'numeric',
@@ -44,6 +48,9 @@ const { Content } = await post.render();
           </div>
         )}
       </div>
+      <a href="/blog" class="text-brand-orange underline decoration-brand-orange/30 hover:decoration-brand-orange text-sm">
+        &larr; Back to blog
+      </a>
     </header>
 
     <div class="prose prose-zinc dark:prose-invert prose-headings:text-zinc-900 dark:prose-headings:text-zinc-100 prose-a:text-brand-orange prose-code:text-brand-orange max-w-none">
