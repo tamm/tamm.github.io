@@ -127,11 +127,19 @@ const { isHomepage = false } = Astro.props;
             isHeaderVisible = shouldShowHeader;
 
             if (shouldShowHeader) {
+              // Show header logo, hide hero
               heroLogo.dataset.hidden = 'true';
               delete headerLogo.dataset.hidden;
+              // Swap view-transition-name so header logo animates on page nav
+              heroLogo.style.viewTransitionName = 'none';
+              headerLogo.style.viewTransitionName = 'site-logo';
             } else {
+              // Show hero logo, hide header
               delete heroLogo.dataset.hidden;
               headerLogo.dataset.hidden = 'true';
+              // Swap view-transition-name so hero logo animates on page nav
+              headerLogo.style.viewTransitionName = 'none';
+              heroLogo.style.viewTransitionName = 'site-logo';
             }
           }
         };
