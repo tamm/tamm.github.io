@@ -12,9 +12,12 @@ const latestPost = posts[0];
 <BaseLayout title="Home">
   <div class="max-w-4xl mx-auto px-6 py-12">
     <section class="mb-16">
-      <h1 class="text-4xl md:text-5xl font-bold mb-6">
-        Hey, I'm <span class="text-brand-orange">Tamm</span>
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">
+        Hej, jag är <span class="text-brand-orange">Tamm</span>
       </h1>
+      <p class="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
+        <span class="italic">(pronounced TAH-mm, rhymes with "calm")</span>
+      </p>
       <p class="text-xl text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">
         Web Sorceress. Engineering Leader. Diversity in Tech Advocate.
       </p>
@@ -26,10 +29,17 @@ const latestPost = posts[0];
     </section>
 
     {latestPost && (
-      <section>
+      <section class="mb-16">
         <h2 class="text-2xl font-semibold mb-6">Latest Post</h2>
-        <a href={`/blog/${latestPost.slug}`} class="block group">
-          <article class="border border-zinc-200 dark:border-zinc-800 rounded-lg p-6 hover:border-brand-orange transition-colors">
+        <a href={`/blog/${latestPost.slug}`} class="group block">
+          <article class="border-b border-zinc-200 dark:border-zinc-800 pb-8">
+            <img
+              src={latestPost.data.ogImage || `/og/${latestPost.slug}.png`}
+              alt={latestPost.data.title}
+              class="w-full rounded-lg mb-4"
+              width="1200"
+              height="630"
+            />
             <h3 class="text-xl font-semibold text-brand-orange group-hover:underline mb-2">
               {latestPost.data.title}
             </h3>
@@ -41,9 +51,18 @@ const latestPost = posts[0];
               })}
             </time>
             {latestPost.data.description && (
-              <p class="mt-3 text-zinc-600 dark:text-zinc-400">
+              <p class="mt-2 text-zinc-600 dark:text-zinc-400">
                 {latestPost.data.description}
               </p>
+            )}
+            {latestPost.data.tags.length > 0 && (
+              <div class="mt-3 flex flex-wrap gap-2">
+                {latestPost.data.tags.map((tag) => (
+                  <span class="text-xs px-2 py-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded">
+                    {tag}
+                  </span>
+                ))}
+              </div>
             )}
           </article>
         </a>
@@ -52,5 +71,48 @@ const latestPost = posts[0];
         </a>
       </section>
     )}
+
+    <section>
+      <h2 class="text-2xl font-semibold mb-6">Projects</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Queer Run Club -->
+        <a
+          href="https://queerrunclub.au"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group block border border-zinc-200 dark:border-zinc-800 rounded-lg p-6 hover:border-brand-orange transition-colors"
+        >
+          <div class="flex items-start gap-4">
+            <img src="/qrc-logo.svg" alt="Queer Run Club logo" class="w-12 h-12 flex-shrink-0" />
+            <div>
+              <h3 class="text-xl font-semibold text-brand-orange group-hover:underline mb-2">
+                Queer Run Club
+              </h3>
+              <p class="text-zinc-600 dark:text-zinc-400">
+                A community running group creating safe spaces for LGBTQIA+ folks and allies. All paces welcome. Joy mandatory.
+              </p>
+            </div>
+          </div>
+        </a>
+
+        <!-- Book -->
+        <a
+          href="/to/news"
+          class="group block border border-zinc-200 dark:border-zinc-800 rounded-lg p-6 hover:border-brand-orange transition-colors"
+        >
+          <div class="flex items-start gap-4">
+            <span class="text-4xl">📕</span>
+            <div>
+              <h3 class="text-xl font-semibold text-brand-orange group-hover:underline mb-2">
+                I'm Writing a Book
+              </h3>
+              <p class="text-zinc-600 dark:text-zinc-400">
+                Sign up for my newsletter to find out more and be the first to know when it's ready.
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
   </div>
 </BaseLayout>
