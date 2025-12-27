@@ -46,3 +46,29 @@
     border-color: #71717a !important;
   }
 }
+
+/* View Transitions - animate logo between pages */
+::view-transition-old(site-logo),
+::view-transition-new(site-logo) {
+  animation-duration: 0.35s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Disable ALL animations on root - no page fade/flicker */
+::view-transition-old(root) {
+  animation: none !important;
+  display: none;
+}
+::view-transition-new(root) {
+  animation: none !important;
+}
+
+/* Hide header logo on homepage when hero is active */
+.header-logo[data-hidden="true"] {
+  clip-path: inset(100%);
+}
+
+/* Hide hero logo when scrolled */
+.hero-logo[data-hidden="true"] {
+  clip-path: inset(100%);
+}
