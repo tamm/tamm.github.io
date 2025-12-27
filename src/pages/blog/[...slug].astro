@@ -74,13 +74,7 @@ const isMemberOnly = post.data.memberOnly;
         {/* Member content - hidden by default, revealed via JS if authenticated */}
         <div id="member-content" class="hidden">
           <div class="prose prose-zinc dark:prose-invert prose-headings:text-zinc-900 dark:prose-headings:text-zinc-100 prose-a:text-brand-orange prose-code:text-brand-orange max-w-none">
-            <iframe
-              src={`https://api.tamm.in/content/${post.slug}`}
-              title={post.data.title}
-              class="w-full rounded-lg border border-zinc-200 dark:border-zinc-700"
-              style="height: 600px; background: #1a1a1a;"
-              loading="lazy"
-            ></iframe>
+            <Content />
           </div>
         </div>
 
