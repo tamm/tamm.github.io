@@ -29,6 +29,7 @@ export const footerSections: NavSection[] = [
     links: [
       { label: 'Blog', href: '/blog' },
       { label: 'About', href: '/about' },
+      { label: 'RSS Feed', href: '/rss.xml' },
       { label: 'All Links', href: '/to/', external: true },
     ],
   },
