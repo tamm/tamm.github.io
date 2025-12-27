@@ -39,7 +39,7 @@ const { isHomepage = false } = Astro.props;
       {mainNavigation.map((link) => (
         <a
           href={link.href}
-          class="text-zinc-600 dark:text-zinc-400 hover:text-brand-orange transition-colors"
+          class="text-zinc-600 dark:text-zinc-400 hover:text-brand-orange"
           {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
         >
           {link.label}
@@ -52,7 +52,7 @@ const { isHomepage = false } = Astro.props;
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            class="text-zinc-500 hover:text-brand-orange transition-colors"
+            class="text-zinc-500 hover:text-brand-orange "
             title={link.label}
           >
             <SocialIcon name={link.icon} class="h-5 w-5" />
@@ -67,7 +67,7 @@ const { isHomepage = false } = Astro.props;
         {mainNavigation.map((link) => (
           <a
             href={link.href}
-            class="block p-3 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-brand-orange transition-colors"
+            class="block p-3 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-brand-orange "
             {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
           >
             {link.label}
@@ -79,7 +79,7 @@ const { isHomepage = false } = Astro.props;
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-zinc-500 hover:text-brand-orange transition-colors"
+              class="text-zinc-500 hover:text-brand-orange "
               title={link.label}
             >
               <SocialIcon name={link.icon} class="h-6 w-6" />

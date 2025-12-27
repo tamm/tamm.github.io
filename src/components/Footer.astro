@@ -24,7 +24,7 @@ const currentYear = new Date().getFullYear();
             <li>
               <a
                 href={link.href}
-                class="text-sm text-zinc-600 dark:text-zinc-400 hover:text-brand-orange transition-colors"
+                class="text-sm text-zinc-600 dark:text-zinc-400 hover:text-brand-orange"
                 {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               >
                 {link.label}
@@ -46,7 +46,7 @@ const currentYear = new Date().getFullYear();
                 <li>
                   <a
                     href={link.href}
-                    class="text-sm text-zinc-600 dark:text-zinc-400 hover:text-brand-orange transition-colors inline-flex items-center gap-2"
+                    class="text-sm text-zinc-600 dark:text-zinc-400 hover:text-brand-orange inline-flex items-center gap-2"
                     {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                   >
                     {link.icon && <SocialIcon name={link.icon} class="h-4 w-4" />}
