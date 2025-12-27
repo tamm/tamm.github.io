@@ -1,5 +1,5 @@
 ---
-import { footerSections } from '@/config/navigation';
+import { footerSections, projectLinks } from '@/config/navigation';
 import TammLogo from '@/components/icons/TammLogo.astro';
 import SocialIcon from '@/components/SocialIcon.astro';
 
@@ -7,50 +7,61 @@ const currentYear = new Date().getFullYear();
 ---
 
 <footer class="border-t border-zinc-200 dark:border-zinc-800 mt-auto">
-  <div class="max-w-6xl mx-auto px-6 py-12">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-      <!-- Logo and tagline -->
-      <div class="md:col-span-2">
+  <div class="max-w-4xl mx-auto px-6 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Bio + Projects -->
+      <div>
         <a href="/" class="inline-block hover:opacity-80 transition-opacity">
           <TammLogo class="h-10 w-auto" />
         </a>
-        <p class="mt-4 text-zinc-600 dark:text-zinc-400">
-          Personal blog and digital home.
+        <p class="mt-4 text-sm text-zinc-600 dark:text-zinc-400">
+          Web Sorceress & Engineering Leader · Founder of Queer Run Club · Swede in Sydney
         </p>
-        <a
-          href="/to/"
-          class="inline-block mt-4 text-brand-orange underline decoration-brand-orange/30 hover:decoration-brand-orange"
-        >
-          All my links &rarr;
-        </a>
+
+        <h3 class="font-semibold mt-6 mb-3 text-zinc-900 dark:text-zinc-100">Projects</h3>
+        <ul class="space-y-2">
+          {projectLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-sm text-zinc-600 dark:text-zinc-400 hover:text-brand-orange transition-colors"
+                {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <!-- Footer sections -->
-      {footerSections.map((section) => (
-        <div>
-          {section.title && (
-            <h3 class="font-semibold mb-4 text-zinc-900 dark:text-zinc-100">{section.title}</h3>
-          )}
-          <ul class="space-y-2">
-            {section.links.map((link) => (
-              <li>
-                <a
-                  href={link.href}
-                  class="text-zinc-600 dark:text-zinc-400 hover:text-brand-orange transition-colors flex items-center gap-2"
-                  {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                >
-                  {link.icon && <SocialIcon name={link.icon} class="h-4 w-4" />}
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      <!-- Footer sections - right aligned on desktop -->
+      <div class="flex gap-12 md:justify-end">
+        {footerSections.map((section) => (
+          <div class="text-left md:text-right">
+            {section.title && (
+              <h3 class="font-semibold mb-4 text-zinc-900 dark:text-zinc-100">{section.title}</h3>
+            )}
+            <ul class="space-y-2">
+              {section.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="text-sm text-zinc-600 dark:text-zinc-400 hover:text-brand-orange transition-colors inline-flex items-center gap-2"
+                    {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  >
+                    {link.icon && <SocialIcon name={link.icon} class="h-4 w-4" />}
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </div>
 
-    <div class="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-800 text-center text-zinc-500 dark:text-zinc-400 text-sm">
-      &copy; {currentYear} Tamm Sjodin. All rights reserved.
+    <div class="mt-8 pt-6 border-t border-zinc-200 dark:border-zinc-800 text-center text-zinc-500 dark:text-zinc-400 text-sm">
+      &copy; {currentYear} Tamm Sjödin. All rights reserved.
     </div>
   </div>
 </footer>

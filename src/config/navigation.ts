@@ -24,20 +24,19 @@ export const socialLinks: NavLink[] = [
   { label: 'Ko-fi', href: 'https://ko-fi.com/tigresstamm', external: true, icon: 'kofi' },
 ];
 
+export const projectLinks: NavLink[] = [
+  { label: 'Queer Run Club', href: 'https://queerrunclub.au', external: true },
+];
+
 export const footerSections: NavSection[] = [
   {
-    title: 'Pages',
+    title: 'Explore',
     links: [
       { label: 'Blog', href: '/blog' },
       { label: 'About', href: '/about' },
+      { label: 'Newsletter', href: '/to/news', external: true },
       { label: 'RSS Feed', href: '/rss.xml' },
       { label: 'All Links', href: '/to/', external: true },
-    ],
-  },
-  {
-    title: 'Projects',
-    links: [
-      { label: 'Queer Run Club', href: 'https://queerrunclub.au', external: true },
     ],
   },
   {
