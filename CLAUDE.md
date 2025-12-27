@@ -91,40 +91,70 @@ GA4 is configured in `src/components/Analytics.astro` with measurement ID `G-Z9H
 
 | Metric | Target | Notes |
 |--------|--------|-------|
-| Performance | 90+ | Critical CSS inlined via astro-critters |
+| Performance | 100 | WebP images, responsive srcset, LCP preload |
 | Accessibility | 100 | Links must have underlines, not just color |
 | Best Practices | 100 | CSP headers, no deprecated APIs |
 | SEO | 100 | Meta descriptions, semantic HTML |
 
 **Key optimizations in place:**
 - `astro-critters` - Inlines critical above-the-fold CSS
+- WebP images with `<picture>` fallbacks - 90%+ size reduction
+- Responsive images - srcset with 400w/800w/1200w variants
+- LCP preload hints - `<link rel="preload">` for hero images
 - Deferred GA loading - Uses `requestIdleCallback` to avoid blocking
 - GPU-accelerated transitions - `will-change` + `translateZ(0)`
 - `content-visibility: auto` - Footer renders only when needed
 - CSP meta tag - XSS protection, clickjacking prevention
+- Cloudflare Cache Rules - Long TTL for static assets
 
 **When adding new features, check:**
 - Links have underlines (not just color differentiation)
 - Images have explicit width/height attributes
+- New images use WebP with `<picture>` element
 - New scripts are deferred or async
 - Run `npm run build` and check for warnings
+
+**IMPORTANT: After any visual or structural changes, ask the user to run Lighthouse and share the results. Target is 100/100/100/100. If Performance drops below 100, investigate immediately.**
 
 ## Deployment
 
 GitHub Actions automatically builds and deploys to GitHub Pages on push to main. Site health is monitored daily via scheduled workflow.
 
-## Ko-fi Integration
+## Ko-fi Membership System
 
-Support/membership platform at [ko-fi.com/tigresstamm](https://ko-fi.com/tigresstamm). Support banner appears on blog posts via `SponsorBanner.astro`. Banner placement configurable in `src/pages/blog/[...slug].astro`.
+Membership platform at [ko-fi.com/tigresstamm](https://ko-fi.com/tigresstamm) with two tiers:
+- **Early book club** - Creative content, early releases, book chapters
+- **AI-pocalypse survivor** - AI guides, experiments (includes book club access)
 
-### Future Plans
+### Architecture
 
-- **Membership tracking system**: Ko-fi webhooks only fire on payment events (not cancellations or status checks). Build a system to track membership status locally by storing webhook events and calculating expiry dates. This enables paywalled/members-only content on the blog.
+- **API Worker** (`workers/api/`) - Cloudflare Worker at api.tamm.in handling:
+  - `POST /webhook` - Ko-fi payment webhook (stores member data)
+  - `GET/POST /login` - Magic link auth via Supabase
+  - `GET /auth/callback` - Handle magic link redirect
+  - `GET /auth/status` - Check auth status (used by frontend)
+  - `GET /logout` - Clear session
+
+- **Supabase** - PostgreSQL database storing members table with tier info
+- **Member-only posts** - Use `memberOnly: true` and `requiredTier: "tier name"` in frontmatter
+
+### Creating Member-Only Content
+
+```markdown
+---
+title: "Post Title"
+memberOnly: true
+requiredTier: "Early book club"  # or "AI-pocalypse survivor"
+---
+```
+
+Tier hierarchy defined in `src/content/config.ts`. Higher tiers include access to lower tier content.
+
+### Future Improvements
 
 - **Mailchimp sync**: No native Ko-fi → Mailchimp integration. Options:
   - Zapier automation (free tier limited, paid ~$20/mo)
   - Custom webhook handler that adds/removes from Mailchimp via their API
-  - Build alongside the membership tracking system above
 
 ## Related Projects
 
