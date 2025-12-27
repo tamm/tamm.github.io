@@ -12,6 +12,7 @@ interface Props {
   image?: string;
   type?: 'website' | 'article';
   isHomepage?: boolean;
+  lcpImage?: string; // Preload hint for LCP image (WebP)
 }
 
 const {
@@ -19,7 +20,8 @@ const {
   description = 'Personal blog and digital home of Tamm Sjodin',
   image = '/og-default.png',
   type = 'website',
-  isHomepage = false
+  isHomepage = false,
+  lcpImage
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -52,6 +54,9 @@ const ogImageURL = new URL(image, Astro.site);
 
     <!-- RSS -->
     <link rel="alternate" type="application/rss+xml" title="tamm.in RSS Feed" href="/rss.xml" />
+
+    <!-- Preload LCP image -->
+    {lcpImage && <link rel="preload" as="image" href={lcpImage} type="image/webp" fetchpriority="high" />}
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
