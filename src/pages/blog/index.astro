@@ -20,6 +20,7 @@ const posts = (await getCollection('blog'))
             <a href={`/blog/${post.slug}`} class="group block">
               <article class="border-b border-zinc-200 dark:border-zinc-800 pb-8">
                 <h2 class="text-xl font-semibold text-brand-orange group-hover:underline mb-2">
+                  {post.data.memberOnly && <span class="inline-block mr-2 opacity-60" title="Members only">&#128274;</span>}
                   {post.data.title}
                 </h2>
                 <time class="text-sm text-zinc-500 dark:text-zinc-400">

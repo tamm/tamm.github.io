@@ -1,0 +1,28 @@
+---
+// Embeds member-only content via iframe
+// The content is served by the content protection worker
+// Example: <ProtectedContent slug="the-playlist-we-couldnt-keep" />
+
+interface Props {
+  slug: string;
+  title?: string;
+  height?: string;
+}
+
+const { slug, title = 'Member Content', height = '600px' } = Astro.props;
+const contentUrl = `https://api.tamm.in/content/${slug}`;
+---
+
+<div class="protected-content-wrapper my-8">
+  <iframe
+    src={contentUrl}
+    title={title}
+    class="w-full rounded-lg border border-zinc-200 dark:border-zinc-700"
+    style={`height: ${height}; background: #1a1a1a;`}
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+  ></iframe>
+  <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-2 text-center">
+    Having trouble? <a href="https://api.tamm.in/login" class="underline hover:text-brand-orange">Login</a> or <a href="https://ko-fi.com/tigresstamm/tiers" class="underline hover:text-brand-orange">Subscribe</a>
+  </p>
+</div>

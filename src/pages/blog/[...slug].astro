@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import SponsorBanner from '@/components/SponsorBanner.astro';
+import MemberPaywall from '@/components/MemberPaywall.astro';
 
 // Support banner placement (can later become sponsor ads)
 const SHOW_SUPPORT_BANNER = true;
@@ -17,6 +18,7 @@ export async function getStaticPaths() {
 
 const post = Astro.props;
 const { Content } = await post.render();
+const isMemberOnly = post.data.memberOnly;
 ---
 
 <BaseLayout
@@ -58,15 +60,53 @@ const { Content } = await post.render();
       </a>
     </header>
 
-    {SHOW_SUPPORT_BANNER && (BANNER_PLACEMENT === 'after-header' || BANNER_PLACEMENT === 'both') && (
+    {SHOW_SUPPORT_BANNER && !isMemberOnly && (BANNER_PLACEMENT === 'after-header' || BANNER_PLACEMENT === 'both') && (
       <SponsorBanner placement="after-header" />
     )}
 
-    <div class="prose prose-zinc dark:prose-invert prose-headings:text-zinc-900 dark:prose-headings:text-zinc-100 prose-a:text-brand-orange prose-code:text-brand-orange max-w-none">
-      <Content />
-    </div>
+    {isMemberOnly ? (
+      <>
+        {/* Paywall - shown by default */}
+        <div id="member-paywall">
+          <MemberPaywall title={post.data.title} description={post.data.description} returnUrl={`/blog/${post.slug}`} />
+        </div>
 
-    {SHOW_SUPPORT_BANNER && (BANNER_PLACEMENT === 'before-footer' || BANNER_PLACEMENT === 'both') && (
+        {/* Member content - hidden by default, revealed via JS if authenticated */}
+        <div id="member-content" class="hidden">
+          <div class="prose prose-zinc dark:prose-invert prose-headings:text-zinc-900 dark:prose-headings:text-zinc-100 prose-a:text-brand-orange prose-code:text-brand-orange max-w-none">
+            <iframe
+              src={`https://api.tamm.in/content/${post.slug}`}
+              title={post.data.title}
+              class="w-full rounded-lg border border-zinc-200 dark:border-zinc-700"
+              style="height: 600px; background: #1a1a1a;"
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+
+        <script>
+          // Check auth and swap paywall for content if authenticated
+          (async () => {
+            try {
+              const res = await fetch('https://api.tamm.in/auth/status', { credentials: 'include' });
+              const data = await res.json();
+              if (data.authenticated && data.isMember) {
+                document.getElementById('member-paywall')?.classList.add('hidden');
+                document.getElementById('member-content')?.classList.remove('hidden');
+              }
+            } catch (e) {
+              // Auth check failed, keep paywall visible
+            }
+          })();
+        </script>
+      </>
+    ) : (
+      <div class="prose prose-zinc dark:prose-invert prose-headings:text-zinc-900 dark:prose-headings:text-zinc-100 prose-a:text-brand-orange prose-code:text-brand-orange max-w-none">
+        <Content />
+      </div>
+    )}
+
+    {SHOW_SUPPORT_BANNER && !isMemberOnly && (BANNER_PLACEMENT === 'before-footer' || BANNER_PLACEMENT === 'both') && (
       <SponsorBanner placement="before-footer" />
     )}
 

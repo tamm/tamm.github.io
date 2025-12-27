@@ -1,0 +1,48 @@
+---
+// Paywall component for member-only posts
+// Shows teaser content with subscribe/login CTAs
+
+interface Props {
+  title: string;
+  description?: string;
+  returnUrl?: string;
+}
+
+const { title, description, returnUrl } = Astro.props;
+const loginUrl = returnUrl
+  ? `https://api.tamm.in/login?redirect=${encodeURIComponent(returnUrl)}`
+  : 'https://api.tamm.in/login';
+---
+
+<div class="paywall-container my-12 p-8 rounded-xl border-2 border-dashed border-zinc-300 dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-800/50 text-center">
+  <div class="text-5xl mb-4">🔒</div>
+  <h2 class="text-xl font-bold text-zinc-900 dark:text-white mb-2">
+    Member-Only Content
+  </h2>
+  {description && (
+    <p class="text-zinc-600 dark:text-zinc-400 mb-6 max-w-md mx-auto">
+      {description}
+    </p>
+  )}
+
+  <div class="flex flex-col sm:flex-row gap-3 justify-center items-center">
+    <a
+      href="https://ko-fi.com/tigresstamm/tiers"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center gap-2 px-6 py-3 bg-brand-orange text-white font-semibold rounded-lg hover:bg-orange-600 transition-colors no-underline"
+    >
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.053 2.678 2.053 2.678s5.915.042 8.867.042c1.819 0 3.086-.842 3.086-.842s.322-.124.322-.523c0-.323-.021-.549-.021-.549s-.242-.276-.486-.276H7.343c-.574 0-.823-.406-.823-.406s-.076-.406.021-.74c.098-.333.595-.858 1.085-.858h5.592c.574 0 .865-.574.865-.574s.617-.94.617-1.613c0-.758-.617-1.146-.617-1.146s-.291-.533-.881-.533H7.343c-.541 0-.799-.492-.799-.492s-.205-.459.041-.832c.246-.374.822-.789 1.39-.789h5.592c.513 0 .853-.483.853-.483s.829-1.25.829-2.016c0-.766-.829-1.119-.829-1.119s-.34-.467-.907-.467H7.343c-.52 0-.782-.513-.782-.513s-.175-.475.064-.828c.238-.354.811-.774 1.367-.774h4.959c.52 0 1.105-.48 1.105-.48s2.453-.398 3.167.924c.715 1.322.304 3.588.304 3.588s-.108.669-.419 1.146c-.312.478-.769.805-.769.805s-.174.205-.174.574c0 .369.174.676.174.676s.393.452.786.452h.786c.393 0 .804-.287.804-.287s3.578-1.176 4.178-5.955z"/>
+      </svg>
+      Subscribe on Ko-fi
+    </a>
+
+    <a
+      href={loginUrl}
+      class="inline-flex items-center gap-2 px-6 py-3 border border-zinc-300 dark:border-zinc-600 text-zinc-700 dark:text-zinc-300 font-medium rounded-lg hover:border-brand-orange hover:text-brand-orange transition-colors no-underline"
+    >
+      Already a member? Login
+    </a>
+  </div>
+</div>
