@@ -3,7 +3,7 @@ title: "What Even Is AI Anymore?"
 description: "Language changes. Words shift. Sometimes we just need to notice it and be a little gentler with each other about it."
 pubDate: 2026-01-08
 tags: ["ai", "language", "terminology", "semantics"]
-draft: true
+draft: false
 ogPrompt: "A computer morphing through time - old mainframe to desktop to laptop to phone to question mark. Simple evolution sketch with flowing transformation lines."
 ---
 
