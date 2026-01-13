@@ -44,9 +44,6 @@ export const footerSections: NavSection[] = [
   },
   {
     title: 'Connect',
-    links: [
-      ...socialLinks,
-      { label: 'hi@tamm.in', href: 'mailto:hi@tamm.in', external: false },
-    ],
+    links: socialLinks,
   },
 ];
