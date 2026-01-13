@@ -12,6 +12,7 @@ export interface NavSection {
 
 export const mainNavigation: NavLink[] = [
   { label: 'Blog', href: '/blog' },
+  { label: 'Music', href: '/music' },
   { label: 'About', href: '/about' },
   { label: 'Newsletter', href: '/to/news', external: true },
 ];
@@ -21,6 +22,7 @@ export const socialLinks: NavLink[] = [
   { label: 'GitHub', href: 'https://github.com/tamm', external: true, icon: 'github' },
   { label: 'Instagram', href: 'https://www.instagram.com/tigresstamm', external: true, icon: 'instagram' },
   { label: 'Mastodon', href: 'https://corteximplant.com/@tamm', external: true, icon: 'mastodon' },
+  { label: 'Spotify', href: 'https://open.spotify.com/artist/0EhxCpwkcCXt9UyMqhncve', external: true, icon: 'spotify' },
   { label: 'Ko-fi', href: 'https://ko-fi.com/tigresstamm', external: true, icon: 'kofi' },
 ];
 
@@ -33,6 +35,7 @@ export const footerSections: NavSection[] = [
     title: 'Explore',
     links: [
       { label: 'Blog', href: '/blog' },
+      { label: 'Music', href: '/music' },
       { label: 'About', href: '/about' },
       { label: 'Newsletter', href: '/to/news', external: true },
       { label: 'RSS Feed', href: '/rss.xml' },
@@ -41,6 +44,9 @@ export const footerSections: NavSection[] = [
   },
   {
     title: 'Connect',
-    links: socialLinks,
+    links: [
+      ...socialLinks,
+      { label: 'hi@tamm.in', href: 'mailto:hi@tamm.in', external: false },
+    ],
   },
 ];
