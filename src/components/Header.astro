@@ -100,11 +100,9 @@ const { isHomepage = false } = Astro.props;
       const toggle = document.getElementById('mobile-menu-toggle');
       const menu = document.getElementById('mobile-menu');
 
-      console.log('initHeader called', { toggle, menu });
-
-      if (toggle && menu) {
+      if (toggle && menu && !toggle.dataset.initialized) {
+        toggle.dataset.initialized = 'true';
         toggle.addEventListener('click', () => {
-          console.log('Menu toggle clicked');
           const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
           toggle.setAttribute('aria-expanded', String(!isExpanded));
           menu.classList.toggle('hidden');
@@ -170,7 +168,7 @@ const { isHomepage = false } = Astro.props;
       }
     }
 
-    initHeader();
+    // astro:page-load fires on initial page load AND on view transitions
     document.addEventListener('astro:page-load', initHeader);
   })();
 </script>
