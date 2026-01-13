@@ -609,7 +609,7 @@ async function handleContent(
     headers: {
       'Content-Type': 'text/html',
       'X-Frame-Options': `ALLOW-FROM ${env.SITE_URL}`,
-      'Content-Security-Policy': `frame-ancestors ${env.SITE_URL}`,
+      'Content-Security-Policy': `frame-ancestors ${env.SITE_URL} http://localhost:* http://127.0.0.1:*`,
       ...corsHeaders,
     },
   });
@@ -681,6 +681,15 @@ function showPaywall(
       ${email ? 'Login with different email' : 'Already a member? Login'}
     </a>
   </div>
+  <script>
+    // Notify parent frame of content height for proper sizing
+    function postHeight() {
+      const height = document.body.scrollHeight;
+      window.parent.postMessage({ type: 'resize', height }, 'https://tamm.in');
+    }
+    postHeight();
+    window.addEventListener('resize', postHeight);
+  </script>
 </body>
 </html>`;
 
@@ -689,7 +698,7 @@ function showPaywall(
     headers: {
       'Content-Type': 'text/html',
       'X-Frame-Options': `ALLOW-FROM ${env.SITE_URL}`,
-      'Content-Security-Policy': `frame-ancestors ${env.SITE_URL}`,
+      'Content-Security-Policy': `frame-ancestors ${env.SITE_URL} http://localhost:* http://127.0.0.1:*`,
       ...corsHeaders,
     },
   });
@@ -784,6 +793,15 @@ function getPlaylistContent(): string {
       <p>Thank you for being a supporter.</p>
     </div>
   </div>
+  <script>
+    // Notify parent frame of content height for proper sizing
+    function postHeight() {
+      const height = document.body.scrollHeight;
+      window.parent.postMessage({ type: 'resize', height }, 'https://tamm.in');
+    }
+    postHeight();
+    window.addEventListener('resize', postHeight);
+  </script>
 </body>
 </html>`;
 }
