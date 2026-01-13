@@ -100,11 +100,16 @@ const { isHomepage = false } = Astro.props;
       const toggle = document.getElementById('mobile-menu-toggle');
       const menu = document.getElementById('mobile-menu');
 
-      toggle?.addEventListener('click', () => {
-        const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
-        toggle.setAttribute('aria-expanded', String(!isExpanded));
-        menu?.classList.toggle('hidden');
-      });
+      console.log('initHeader called', { toggle, menu });
+
+      if (toggle && menu) {
+        toggle.addEventListener('click', () => {
+          console.log('Menu toggle clicked');
+          const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+          toggle.setAttribute('aria-expanded', String(!isExpanded));
+          menu.classList.toggle('hidden');
+        });
+      }
 
       // Homepage logo scroll animation
       const headerLogo = document.querySelector('.header-logo');
