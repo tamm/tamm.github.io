@@ -18,11 +18,11 @@ resource "cloudflare_ruleset" "cache_rules" {
       cache = true
       browser_ttl {
         mode    = "override_origin"
-        default = 31536000  # 1 year
+        default = 31536000 # 1 year
       }
       edge_ttl {
         mode    = "override_origin"
-        default = 2678400   # 31 days
+        default = 2678400 # 31 days
       }
     }
   }
