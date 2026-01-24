@@ -1,0 +1,22 @@
+terraform {
+  required_version = ">= 1.5.0"
+
+  cloud {
+    hostname     = "app.terraform.io"
+    organization = "tamm-in"
+    workspaces {
+      name = "tamm-in"
+    }
+  }
+
+  required_providers {
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 4.0"
+    }
+  }
+}
+
+provider "cloudflare" {
+  api_token = var.cloudflare_api_token
+}
